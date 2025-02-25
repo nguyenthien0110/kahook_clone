@@ -12,6 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      clipPath: {
+        "kahoot-style": "polygon(0 0, 100% 0, 70% 100%, 0 100%)",
+      },
     },
   },
   plugins: [],

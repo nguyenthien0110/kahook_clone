@@ -12,9 +12,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(response);
     }
 
-    return NextResponse.json(createResponse<null>(200, "Invalid credentials"), {
-      status: 401,
-    });
+    return NextResponse.json(createResponse<null>(400, "Invalid credentials"));
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(createResponse<null>(500, "Server error"), {

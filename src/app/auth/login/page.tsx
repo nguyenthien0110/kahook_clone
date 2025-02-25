@@ -5,13 +5,40 @@ import { Github } from "@/assets/icon/Github";
 import { GmailLight } from "@/assets/icon/GmailLight";
 import { Lock } from "@/assets/icon/Lock";
 import { UserCircleOutline } from "@/assets/icon/UserCircleOutline";
+import ToastProvider, { NotifyMessage } from "@/components/Message";
+import { loginAuth } from "@/services/users";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Login() {
   const router = useRouter();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
+
+  const handleLogin = () => {
+    loginAuth(username, password).then((data) => {
+      setStatus(data.status);
+      setShowMessage(true);
+    });
+  };
+  useEffect(() => {
+    if (showMessage) {
+      const timer = setTimeout(() => setShowMessage(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [showMessage]);
 
   return (
     <>
+      <ToastProvider />
+      {showMessage && (
+        <NotifyMessage
+          message={status == "200" ? "success" : "error"}
+          type={status == "200" ? "success" : "error"}
+        />
+      )}
       <div className="flex justify-center items-center w-full h-screen bg-gradient-to-br from-[#3a0ca3] to-[#720937]">
         <div className="bg-[#fff] h-[658px] w-[412px] box-border border rounded-xl">
           <div className="h-24 w-ful flex items-center justify-center text-[#000] text-[30px] mt-10 font-bold">
@@ -24,6 +51,8 @@ export default function Login() {
               <input
                 className="h-8 w-full focus:outline-none"
                 type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 placeholder="Type your username"
               />
             </div>
@@ -36,6 +65,8 @@ export default function Login() {
               <input
                 className="h-8 w-full focus:outline-none"
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Type your password"
               />
             </div>
@@ -45,7 +76,10 @@ export default function Login() {
             <span>Forgot password?</span>
           </div>
           <div className="bg-white w-full h-16 my-2 flex justify-center items-center">
-            <button className="bg-gradient-to-br from-[#3a0ca3] to-[#720937] w-[80%] h-12 text-[18px] font-bold text-gray-50 border rounded-3xl hover:from-[#645587] hover:to-[#823c5a]">
+            <button
+              onClick={handleLogin}
+              className="bg-gradient-to-br from-[#3a0ca3] to-[#720937] w-[80%] h-12 text-[18px] font-bold text-gray-50 border rounded-3xl hover:from-[#645587] hover:to-[#823c5a]"
+            >
               Login
             </button>
           </div>

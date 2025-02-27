@@ -4,6 +4,10 @@ export const loginAuth = (username: string, password: string) => {
   return fetchData("api/auth/login", "POST", { username, password });
 };
 
+export const registerAuth = (username: string, password: string) => {
+  return fetchData("api/auth/register", "POST", { username, password });
+};
+
 const fetchData = async (
   endpoint: string,
   method: string = "GET",

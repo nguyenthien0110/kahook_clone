@@ -10,6 +10,7 @@ export default {
     extend: {
       colors: {
         background: "var(--background)",
+        primary: "#2f52cb",
         foreground: "var(--foreground)",
       },
       clipPath: {

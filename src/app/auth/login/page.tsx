@@ -17,18 +17,29 @@ export default function Login() {
   const [status, setStatus] = useState("");
   const [showMessage, setShowMessage] = useState(false);
 
-  const handleLogin = () => {
-    loginAuth(username, password).then((data) => {
-      setStatus(data.status);
-      setShowMessage(true);
-    });
-  };
+  useEffect(() => {
+    if (localStorage.getItem("username")) {
+      router.push("/list");
+    }
+  });
+
   useEffect(() => {
     if (showMessage) {
       const timer = setTimeout(() => setShowMessage(false), 3000);
       return () => clearTimeout(timer);
     }
   }, [showMessage]);
+
+  const handleLogin = () => {
+    loginAuth(username, password).then((data) => {
+      setStatus(data.status);
+      setShowMessage(true);
+      if (!localStorage.getItem("username")) {
+        localStorage.setItem("username", username);
+      }
+      router.push("/list");
+    });
+  };
 
   return (
     <>

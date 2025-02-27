@@ -12,13 +12,7 @@ export const Message = {
 type MessageType = keyof typeof Message;
 
 const ToastProvider = () => {
-  return (
-    <ToastContainer
-      position="top-right"
-      autoClose={3000}
-      stacked      
-    />
-  );
+  return <ToastContainer position="top-right" autoClose={3000} stacked />;
 };
 
 export default ToastProvider;

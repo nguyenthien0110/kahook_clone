@@ -1,6 +1,6 @@
 "use client";
 
-import { Sqrllogin } from "@/assets/icon/Sqrllogin";
+import { UserCircleOutline } from "@/assets/icon/UserCircleOutline";
 import ToastProvider, { NotifyMessage } from "@/components/Message";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,7 +33,7 @@ export default function Home() {
     <>
       <div className="relative w-full h-screen flex justify-center items-center bg-gradient-to-br from-[#3a0ca3] to-[#720937]">
         <div className="absolute inset-0 bg-[#4a148c] opacity-50 clip-path-kahoot-style"></div>
-        <Sqrllogin
+        <UserCircleOutline
           onClick={handleLogin}
           className="text-[#fff] h-8 w-8 absolute top-0 right-0 mt-4 mr-8 rounded-2xl hover:bg-white hover:opacity-60 hover:text-[#000] hover:cursor-pointer"
         />

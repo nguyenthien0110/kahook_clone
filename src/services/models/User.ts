@@ -1,26 +1,25 @@
-import mongoose, { Schema, Document } from "mongoose";
+import { Schema, model, models } from "mongoose";
+import bcrypt from "bcrypt";
 
-interface User extends Document {
-  username: string;
-  password: string;
-}
+const userSchema = new Schema(
+  {
+    id: { type: String, required: true },
+    username: { type: String, required: true },
+    password: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
-const userSchema = new Schema<User>({
-  username: {
-    type: String,
-    required: [true, "Username is required"],
-    unique: [true, "Username is already taken"],
-    trim: true,
-    minlength: 3,
-  },
-  password: {
-    type: String,
-    required: [true, "Email is required"],
-    unique: [true, "Email is already in use"],
-    trim: true,
-    lowercase: true,
-  },
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+  this.password = await bcrypt.hash(this.password, 10);
+  next();
 });
 
-export const User =
-  mongoose.models.User || mongoose.model<User>("User", userSchema);
+userSchema.methods.comparePassword = async function (password: string) {
+  return await bcrypt.compare(password, this.password);
+};
+
+const User = models.User || model("User", userSchema);
+
+export default User;

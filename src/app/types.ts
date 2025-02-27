@@ -18,3 +18,12 @@ export interface LoginRequest {
   username: string;
   password: string;
 }
+
+export interface InterfaceAlertDialog {
+  title: string;
+  content: string;
+  open: boolean;
+  handleLogout: () => void;
+  handleClose: () => void;
+  children: React.ReactElement | null;
+}

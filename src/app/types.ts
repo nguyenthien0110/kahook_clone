@@ -23,7 +23,7 @@ export interface InterfaceAlertDialog {
   title: string;
   content: string;
   open: boolean;
-  handleLogout: () => void;
+  handleLogic: () => void;
   handleClose: () => void;
   children: React.ReactElement | null;
 }

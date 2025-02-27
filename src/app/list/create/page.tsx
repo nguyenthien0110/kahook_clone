@@ -3,22 +3,14 @@
 import { Logout1Solid } from "@/assets/icon/Logout1Solid";
 import AlertDialog from "@/components/AlertDialog";
 import Button from "@/components/Button";
-import Quiz from "@/components/Quiz";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-function Home() {
+function Create() {
   const user = localStorage.getItem("username");
   const router = useRouter();
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [openExit, setOpenExit] = useState(false);
+  const [openLogOut, setOpenLogOut] = useState(false);
 
   useEffect(() => {
     if (!user) router.push("/auth/login");
@@ -31,10 +23,8 @@ function Home() {
     }
   };
 
-  const handleOnClick = () => {
-    if (user) {
-      router.push("/list/create");
-    }
+  const handleExitPage = () => {
+    router.push("/list");
   };
 
   return (
@@ -45,8 +35,22 @@ function Home() {
             Kahoot Clone!
           </span>
           <div className="absolute h-full w-[40%] right-16 flex items-center">
-            <div className="h-10 mx-2">
-              <Button handleOnClick={handleOnClick} title="Create" />
+            <div className="h-10 mx-2 flex gap-1">
+              <AlertDialog
+                title="Exit"
+                content="Are you sure you want to exit this page?"
+                open={openExit}
+                handleLogic={handleExitPage}
+                handleClose={() => setOpenExit(false)}
+              >
+                <Button
+                  handleOnClick={() => setOpenExit(true)}
+                  title="Exit"
+                  color="#D41F25"
+                />
+              </AlertDialog>
+              <Button title="Save" color="#BCD41F" />
+              <Button title="Preview" color="#1FD42B" />
             </div>
             <div className="h-14 w-[1px] border border-gray-300" />
             <span className="mx-2 font-bold">Hello, Welcome</span>
@@ -56,24 +60,20 @@ function Home() {
             <AlertDialog
               title="DELETE"
               content="Are you sure you want to sign out?"
-              open={open}
+              open={openLogOut}
               handleLogic={handleLogout}
-              handleClose={handleClose}
+              handleClose={() => setOpenLogOut(false)}
             >
               <div className="absolute right-0 mr-2 text-[28px] hover:cursor-pointer hover:bg-gray-400 rounded-md">
-                <Logout1Solid onClick={handleClickOpen} />
+                <Logout1Solid onClick={() => setOpenLogOut(true)} />
               </div>
             </AlertDialog>
           </div>
         </div>
       </div>
-      <div className="h-auto mx-20 mt-8">
-        <Quiz email={user || ""} title="Quiz 1" />
-        <Quiz email={user || ""} title="Quiz 2" />
-        <Quiz email={user || ""} title="Quiz 3" />
-      </div>
+      <div className="h-auto mx-20 mt-8"></div>
     </>
   );
 }
 
-export default Home;
+export default Create;

@@ -11,7 +11,7 @@ export default function AlertDialog({
   title = "",
   content = "",
   open = false,
-  handleLogout = () => {},
+  handleLogic = () => {},
   handleClose = () => {},
   children,
 }: InterfaceAlertDialog) {
@@ -32,7 +32,7 @@ export default function AlertDialog({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleLogout}>OK</Button>
+          <Button onClick={handleLogic}>OK</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
